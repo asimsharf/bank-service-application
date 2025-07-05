@@ -2,7 +2,7 @@ spring:
   application:
     name: bank-service-application
   datasource:
-    url: jdbc:h2:file:./camunda-h2-database
+    url: jdbc:h2:file:./data/camunda-h2-database
 
 camunda:
   bpm:
@@ -20,12 +20,13 @@ camunda:
 
 logging:
   level:
-    org.camunda.bpm: DEBUG
-    org.camunda.bpm.engine.rest: DEBUG
-    org.camunda.bpm.engine.rest.impl: DEBUG
-    org.camunda.bpm.engine.rest.util: DEBUG
-    org.camunda.bpm.engine.rest.exception: DEBUG
-    org.camunda.bpm.engine.rest.security.auth: DEBUG
-    org.camunda.bpm.engine.rest.security.auth.impl: DEBUG
-    org.camunda.bpm.engine.rest.security.auth.authorization: DEBUG
-
+    root: INFO
+    org.camunda.bpm.engine: INFO
+    org.camunda.bpm.engine.impl.persistence: WARN
+    org.camunda.bpm.engine.impl.interceptor: WARN
+    org.camunda.bpm.engine.rest: INFO
+    org.camunda.bpm.engine.rest.security: WARN
+    org.camunda.bpm.spring.boot: INFO
+#    org.camunda.bpm.engine.cmd: DEBUG   # Shows command stack activity
+#    org.camunda.bpm.engine.jobexecutor: DEBUG  # Shows async executor activity
+    com.sudagoarth: INFO  # Your application package

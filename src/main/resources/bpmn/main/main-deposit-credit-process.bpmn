@@ -8,7 +8,7 @@
       <bpmn:incoming>Flow_14u23gu</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1tlrjy7" sourceRef="EventStartID" targetRef="GoingToTheBankID" />
-    <bpmn:userTask id="GoingToTheBankID" name="Going To The Bank" camunda:formKey="camunda-forms:/form/way-toget-to-the-bank.form">
+    <bpmn:userTask id="GoingToTheBankID" name="Going To The Bank" camunda:formKey="camunda-forms:/form/way-to-get-to-the-bank.form">
       <bpmn:incoming>Flow_1tlrjy7</bpmn:incoming>
       <bpmn:outgoing>Flow_0l30vmb</bpmn:outgoing>
     </bpmn:userTask>

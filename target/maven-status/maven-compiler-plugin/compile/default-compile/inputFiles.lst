@@ -1,1 +1,5 @@
 /Users/asimsharf/sudagoarth/bank-service-application/src/main/java/com/sudagoarth/bankService/Application.java
+/Users/asimsharf/sudagoarth/bank-service-application/src/main/java/com/sudagoarth/bankService/models/Client.java
+/Users/asimsharf/sudagoarth/bank-service-application/src/main/java/com/sudagoarth/bankService/models/Passport.java
+/Users/asimsharf/sudagoarth/bank-service-application/src/main/java/com/sudagoarth/bankService/models/Wallet.java
+/Users/asimsharf/sudagoarth/bank-service-application/src/main/java/com/sudagoarth/bankService/services/way/delegate/TaxiPaymentDelegate.java
