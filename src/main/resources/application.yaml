@@ -1,5 +1,31 @@
-spring.datasource.url: jdbc:h2:file:./camunda-h2-database
+spring:
+  application:
+    name: bank-service-application
+  datasource:
+    url: jdbc:h2:file:./camunda-h2-database
 
-camunda.bpm.admin-user:
-  id: demo
-  password: demo
+camunda:
+  bpm:
+    admin-user:
+      id: demo
+      password: demo
+
+    database:
+      type: h2
+      schema-update: true
+
+    default-serialization-format: application/json
+    generic-properties.properties:
+      history-time-to-live: P1D
+
+logging:
+  level:
+    org.camunda.bpm: DEBUG
+    org.camunda.bpm.engine.rest: DEBUG
+    org.camunda.bpm.engine.rest.impl: DEBUG
+    org.camunda.bpm.engine.rest.util: DEBUG
+    org.camunda.bpm.engine.rest.exception: DEBUG
+    org.camunda.bpm.engine.rest.security.auth: DEBUG
+    org.camunda.bpm.engine.rest.security.auth.impl: DEBUG
+    org.camunda.bpm.engine.rest.security.auth.authorization: DEBUG
+
