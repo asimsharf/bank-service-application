@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1he8m0t" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.36.1" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.7.0">
-  <bpmn:collaboration id="Collaboration_04rvqkm">
+  <bpmn:collaboration id="DepositOpeningProcess">
     <bpmn:participant id="DepositOpeninigID" name="Deposit Openinig" processRef="DepositOpeningProcessID" />
     <bpmn:textAnnotation id="TextAnnotation_0e6p39k">
       <bpmn:text>1. Check if client has a passport &lt; if not throw an error since passport is required</bpmn:text>
@@ -76,7 +76,7 @@
     <bpmn:association id="Association_0dx2qmi" associationDirection="None" sourceRef="ActivityDepositChoosingID" targetRef="TextAnnotation_0wn3oxn" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_04rvqkm">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="DepositOpeningProcess">
       <bpmndi:BPMNShape id="Participant_1wkpej0_di" bpmnElement="DepositOpeninigID" isHorizontal="true">
         <dc:Bounds x="155" y="87" width="1760" height="800" />
         <bpmndi:BPMNLabel />
