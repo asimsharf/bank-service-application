@@ -55,7 +55,7 @@
     <bpmn:sequenceFlow id="Flow_0prqlz3" sourceRef="ActivityGetCreditID" targetRef="Gateway_1u5hqr7" />
     <bpmn:sequenceFlow id="Flow_1epbjjb" sourceRef="Gateway_1u5hqr7" targetRef="ActivityRoadToHomeID" />
     <bpmn:sequenceFlow id="Flow_14u23gu" sourceRef="ActivityRoadToHomeID" targetRef="EventEndID" />
-    <bpmn:callActivity id="ActivityOpenDepositID" name="Open Deposit" calledElement="DepositOpeningProcess">
+    <bpmn:callActivity id="ActivityOpenDepositID" name="Open Deposit" calledElement="DepositOpeningProcess" camunda:calledElementTenantId="">
       <bpmn:extensionElements>
         <camunda:in businessKey="#{execution.processBusinessKey}" />
         <camunda:in variables="all" />
