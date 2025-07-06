@@ -9,36 +9,26 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
-@Component("taxiPaymentDelegate") // <-- Important!
+@Component("taxiPaymentDelegate")
 public class TaxiPaymentDelegate implements JavaDelegate {
     private static final Logger logger = LoggerFactory.getLogger(TaxiPaymentDelegate.class);
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
-        logger.info("Taxi payment delegate executed");
+        logger.info("The TaxiPaymentDelegate has executed ...");
 
-        Client client = (Client) delegateExecution.getVariable("client");
-        String taxiCostStr = (String) delegateExecution.getVariable("taxiCost");
+        var client = (Client) delegateExecution.getVariable("client");
+        var taxiCost = (String) delegateExecution.getVariable("taxiCost");
 
-        if (client == null || taxiCostStr == null) {
-            throw new IllegalArgumentException("Required variables 'client' or 'taxiCost' not found.");
-        }
+        var moneyOnWallet = client.getWallet().getMoneyCount().subtract(new BigDecimal(taxiCost));
 
-        BigDecimal taxiCost = new BigDecimal(taxiCostStr);
-        BigDecimal walletBalance = client.getWallet().getBalance();
-        BigDecimal updatedBalance = walletBalance.subtract(taxiCost);
+        client.getWallet().setMoneyCount(moneyOnWallet);
 
-        logger.info("Money on wallet before payment: {}", walletBalance);
-        logger.info("Taxi cost: {}", taxiCost);
-
-        if (updatedBalance.compareTo(BigDecimal.ZERO) < 0) {
-            logger.error("Not enough money on wallet to pay for taxi");
-            throw new RuntimeException("Not enough money on wallet to pay for taxi");
-        }
-
-        client.getWallet().setBalance(updatedBalance);
         delegateExecution.setVariable("client", client);
+        logger.info("Client's wallet updated. New balance: {}", client.getWallet().getMoneyCount());
+        logger.info("Taxi payment of {} has been processed for client: {}", taxiCost, client.getName());
+        logger.info("The TaxiPaymentDelegate has finished executing.");
 
-        logger.info("Taxi payment successful, new wallet balance: {}", updatedBalance);
+
     }
 }

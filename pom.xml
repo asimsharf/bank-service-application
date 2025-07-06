@@ -129,6 +129,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!--Spring Boot Starter for Web, which provides the necessary dependencies to build web applications.-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+
     </dependencies>
 
     <build>

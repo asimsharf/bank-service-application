@@ -15,6 +15,7 @@ import java.time.LocalDate;
 @Setter
 @Getter
 public class Passport {
+    String series;
     String identicalNumber;
     String name;
     String surname;

@@ -35,7 +35,7 @@
       <bpmn:outgoing>Flow_1w398bo</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_06ocgt2" sourceRef="ActivityGetTicketInQueueMachineID" targetRef="GatewayDepositOrCreditID" />
-    <bpmn:userTask id="ActivityGetTicketInQueueMachineID" name="Get Ticket In Queue Machine" camunda:formKey="camunda-forms:/form/queue-machine">
+    <bpmn:userTask id="ActivityGetTicketInQueueMachineID" name="Get Ticket In Queue Machine" camunda:formKey="camunda-forms:/form/queue-machine.form">
       <bpmn:incoming>Flow_0b9yjtf</bpmn:incoming>
       <bpmn:incoming>Flow_0lsy0i6</bpmn:incoming>
       <bpmn:outgoing>Flow_06ocgt2</bpmn:outgoing>

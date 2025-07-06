@@ -15,5 +15,5 @@ import java.math.BigDecimal;
 @Setter
 @Getter
 public class Wallet {
-    BigDecimal balance;
+    BigDecimal moneyCount;
 }
