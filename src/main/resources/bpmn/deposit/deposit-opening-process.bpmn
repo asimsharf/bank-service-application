@@ -5,59 +5,50 @@
     <bpmn:textAnnotation id="TextAnnotation_0e6p39k">
       <bpmn:text>1. Check if client has a passport &lt; if not throw an error since passport is required</bpmn:text>
     </bpmn:textAnnotation>
-    <bpmn:association id="Association_1xz6n4q" associationDirection="None" sourceRef="ActivityProvidePassportID" targetRef="TextAnnotation_0e6p39k" />
     <bpmn:textAnnotation id="TextAnnotation_19vlqxp">
       <bpmn:text>1. Create and provide list of deposits
 2. Set them to ex variable</bpmn:text>
     </bpmn:textAnnotation>
-    <bpmn:association id="Association_1sd3nsj" associationDirection="None" sourceRef="ActivityProvideListOfDepositsID" targetRef="TextAnnotation_19vlqxp" />
     <bpmn:textAnnotation id="TextAnnotation_0wn3oxn">
       <bpmn:text>1. Client reads the deposit list 
 2. Choose the Prefered deposit</bpmn:text>
     </bpmn:textAnnotation>
+    <bpmn:association id="Association_1sd3nsj" associationDirection="None" sourceRef="ActivityProvideListOfDepositsID" targetRef="TextAnnotation_19vlqxp" />
+    <bpmn:association id="Association_1xz6n4q" associationDirection="None" sourceRef="ActivityProvidePassportID" targetRef="TextAnnotation_0e6p39k" />
   </bpmn:collaboration>
   <bpmn:process id="DepositOpeningProcessID" name="DepositOpeningProcessName" isExecutable="true">
     <bpmn:laneSet id="LaneSet_1dfrpto">
       <bpmn:lane id="ClientID" name="Client">
-        <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EventStartID</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ActivityProvidePassportID</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_11h93x3</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>EventErrorPassportShouldBePresentHandleID</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ActivityDepositChoosingID</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Event_1814sf7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EventEndID</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ActivityDepositOpeningProcessID</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EventErrorPassportShouldBePresentHandleID</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="BankWorkerID" name="BankWorker">
         <bpmn:flowNodeRef>ActivityProvideListOfDepositsID</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
-    <bpmn:startEvent id="StartEvent_1">
-      <bpmn:outgoing>Flow_0w4fk9f</bpmn:outgoing>
-    </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_0w4fk9f" sourceRef="StartEvent_1" targetRef="ActivityProvidePassportID" />
-    <bpmn:serviceTask id="ActivityProvidePassportID" name="Provide Passport">
-      <bpmn:extensionElements>
-        <zeebe:taskDefinition type="" retries="" />
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0w4fk9f</bpmn:incoming>
-      <bpmn:outgoing>Flow_0iv3y3t</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:endEvent id="Event_11h93x3">
-      <bpmn:incoming>Flow_0tkqz0g</bpmn:incoming>
-    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_16puf6r" sourceRef="ActivityDepositOpeningProcessID" targetRef="EventEndID" />
+    <bpmn:sequenceFlow id="Flow_1o00yi1" sourceRef="ActivityDepositChoosingID" targetRef="ActivityDepositOpeningProcessID" />
+    <bpmn:sequenceFlow id="Flow_1r17dyc" sourceRef="ActivityProvideListOfDepositsID" targetRef="ActivityDepositChoosingID" />
     <bpmn:sequenceFlow id="Flow_0tkqz0g" sourceRef="EventErrorPassportShouldBePresentHandleID" targetRef="Event_11h93x3" />
+    <bpmn:sequenceFlow id="Flow_0iv3y3t" sourceRef="ActivityProvidePassportID" targetRef="ActivityProvideListOfDepositsID" />
+    <bpmn:sequenceFlow id="Flow_0w4fk9f" sourceRef="EventStartID" targetRef="ActivityProvidePassportID" />
     <bpmn:boundaryEvent id="EventErrorPassportShouldBePresentHandleID" name="Error Passport Should Be Present Handle" attachedToRef="ActivityProvidePassportID">
       <bpmn:outgoing>Flow_0tkqz0g</bpmn:outgoing>
       <bpmn:errorEventDefinition id="ErrorEventDefinition_1ae8uss" />
     </bpmn:boundaryEvent>
-    <bpmn:sequenceFlow id="Flow_0iv3y3t" sourceRef="ActivityProvidePassportID" targetRef="ActivityProvideListOfDepositsID" />
-    <bpmn:serviceTask id="ActivityProvideListOfDepositsID" name="Provide list of deposits">
-      <bpmn:incoming>Flow_0iv3y3t</bpmn:incoming>
-      <bpmn:outgoing>Flow_1r17dyc</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="Flow_1r17dyc" sourceRef="ActivityProvideListOfDepositsID" targetRef="ActivityDepositChoosingID" />
-    <bpmn:sequenceFlow id="Flow_1o00yi1" sourceRef="ActivityDepositChoosingID" targetRef="ActivityDepositOpeningProcessID" />
-    <bpmn:sequenceFlow id="Flow_16puf6r" sourceRef="ActivityDepositOpeningProcessID" targetRef="Event_1814sf7" />
+    <bpmn:scriptTask id="ActivityDepositOpeningProcessID" name="Deposit opening process">
+      <bpmn:extensionElements />
+      <bpmn:incoming>Flow_1o00yi1</bpmn:incoming>
+      <bpmn:outgoing>Flow_16puf6r</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:endEvent id="EventEndID" name="Deposit Opening Process End">
+      <bpmn:incoming>Flow_16puf6r</bpmn:incoming>
+    </bpmn:endEvent>
     <bpmn:userTask id="ActivityDepositChoosingID" name="Take a look in to deposit list and choose one of them">
       <bpmn:extensionElements>
         <zeebe:userTask />
@@ -65,14 +56,23 @@
       <bpmn:incoming>Flow_1r17dyc</bpmn:incoming>
       <bpmn:outgoing>Flow_1o00yi1</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:endEvent id="Event_1814sf7">
-      <bpmn:incoming>Flow_16puf6r</bpmn:incoming>
+    <bpmn:serviceTask id="ActivityProvideListOfDepositsID" name="Provide list of deposits">
+      <bpmn:incoming>Flow_0iv3y3t</bpmn:incoming>
+      <bpmn:outgoing>Flow_1r17dyc</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_11h93x3">
+      <bpmn:incoming>Flow_0tkqz0g</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:scriptTask id="ActivityDepositOpeningProcessID" name="Deposit opening process">
-      <bpmn:extensionElements />
-      <bpmn:incoming>Flow_1o00yi1</bpmn:incoming>
-      <bpmn:outgoing>Flow_16puf6r</bpmn:outgoing>
-    </bpmn:scriptTask>
+    <bpmn:serviceTask id="ActivityProvidePassportID" name="Provide Passport">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="" retries="" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0w4fk9f</bpmn:incoming>
+      <bpmn:outgoing>Flow_0iv3y3t</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:startEvent id="EventStartID" name="Deposit Opening Process Start">
+      <bpmn:outgoing>Flow_0w4fk9f</bpmn:outgoing>
+    </bpmn:startEvent>
     <bpmn:association id="Association_0dx2qmi" associationDirection="None" sourceRef="ActivityDepositChoosingID" targetRef="TextAnnotation_0wn3oxn" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -89,8 +89,11 @@
         <dc:Bounds x="185" y="87" width="1730" height="383" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="EventStartID">
         <dc:Bounds x="277" y="262" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="254" y="305" width="82" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1age1hu_di" bpmnElement="ActivityProvidePassportID" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
         <dc:Bounds x="370" y="240" width="100" height="80" />
@@ -107,8 +110,11 @@
         <dc:Bounds x="720" y="240" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1814sf7_di" bpmnElement="Event_1814sf7">
+      <bpmndi:BPMNShape id="Event_1814sf7_di" bpmnElement="EventEndID">
         <dc:Bounds x="1812" y="262" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1789" y="305" width="82" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1rl5vhn_di" bpmnElement="ActivityDepositOpeningProcessID">
         <dc:Bounds x="1050" y="240" width="100" height="80" />
