@@ -16,19 +16,11 @@ public class TaxiPaymentDelegate implements JavaDelegate {
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
         logger.info("The TaxiPaymentDelegate has executed ...");
-
         var client = (Client) delegateExecution.getVariable("client");
         var taxiCost = (String) delegateExecution.getVariable("taxiCost");
-
         var moneyOnWallet = client.getWallet().getMoneyCount().subtract(new BigDecimal(taxiCost));
-
         client.getWallet().setMoneyCount(moneyOnWallet);
-
         delegateExecution.setVariable("client", client);
-        logger.info("Client's wallet updated. New balance: {}", client.getWallet().getMoneyCount());
-        logger.info("Taxi payment of {} has been processed for client: {}", taxiCost, client.getName());
-        logger.info("The TaxiPaymentDelegate has finished executing.");
-
-
+        logger.info("Client {} has paid for taxi ride. Remaining wallet balance: {}", client.getName(), moneyOnWallet);
     }
 }
