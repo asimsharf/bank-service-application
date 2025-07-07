@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:activiti="http://www.activiti.org/test" xmlns:tns="http://bpmn.io/schema/bpmn" xmlns:xsd="http://www.w3.org/2001/XMLSchema" id="Definitions_0fr9mxs" name="" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.36.1">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:activiti="http://www.activiti.org/test" xmlns:tns="http://bpmn.io/schema/bpmn" xmlns:xsd="http://www.w3.org/2001/XMLSchema" id="Definitions_0fr9mxs" name="" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.36.1">
   <bpmn:collaboration id="ClientID">
     <bpmn:extensionElements />
     <bpmn:participant id="CreditOpeninigID" name="Credit Openinig" processRef="CreditOpeningProcessID" />
@@ -9,11 +9,23 @@
       <bpmn:lane id="Lane_146t8ya" name="Client">
         <bpmn:flowNodeRef>EventStartID</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EventEndID</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1iv8ahf</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="BankWorkerID" name="Bank Worker" />
     </bpmn:laneSet>
-    <bpmn:startEvent id="EventStartID" name="Credit Opening Process Start" />
-    <bpmn:endEvent id="EventEndID" name="Deposit Opening Process End" />
+    <bpmn:startEvent id="EventStartID" name="Credit Opening Process Start">
+      <bpmn:outgoing>Flow_0n25w16</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0n25w16" sourceRef="EventStartID" targetRef="Activity_1iv8ahf" />
+    <bpmn:sequenceFlow id="Flow_1miizsb" sourceRef="Activity_1iv8ahf" targetRef="EventEndID" />
+    <bpmn:endEvent id="EventEndID" name="Deposit Opening Process End">
+      <bpmn:incoming>Flow_1miizsb</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:scriptTask id="Activity_1iv8ahf" scriptFormat="JavaScript">
+      <bpmn:incoming>Flow_0n25w16</bpmn:incoming>
+      <bpmn:outgoing>Flow_1miizsb</bpmn:outgoing>
+      <bpmn:script>print('Credit Opening Process')</bpmn:script>
+    </bpmn:scriptTask>
   </bpmn:process>
   <bpmn:error id="Error_1ubtzh1" name="SUDDEN_OPERATION_INTERRUPTION_ERROR" errorCode="SUDDEN_OPERATION_INTERRUPTION_ERROR" camunda:errorMessage="" />
   <bpmndi:BPMNDiagram id="Diagram-_1" name="New Diagram" documentation="background=#2B2D30;count=1;horizontalcount=1;orientation=0;width=842.4;height=1195.2;imageableWidth=832.4;imageableHeight=1185.2;imageableX=5.0;imageableY=5.0">
@@ -37,11 +49,22 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape-Event_0frwe09" bpmnElement="EventEndID">
-        <dc:Bounds x="2074" y="224" width="32" height="32" />
+        <dc:Bounds x="2074" y="234" width="32" height="32" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2052" y="263" width="82" height="27" />
+          <dc:Bounds x="2052" y="273" width="82" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0hcma4i_di" bpmnElement="Activity_1iv8ahf">
+        <dc:Bounds x="1030" y="210" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0n25w16_di" bpmnElement="Flow_0n25w16">
+        <di:waypoint x="286" y="250" />
+        <di:waypoint x="1030" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1miizsb_di" bpmnElement="Flow_1miizsb">
+        <di:waypoint x="1130" y="250" />
+        <di:waypoint x="2074" y="250" />
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
