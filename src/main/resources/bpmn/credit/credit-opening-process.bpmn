@@ -4,7 +4,7 @@
     <bpmn:extensionElements />
     <bpmn:participant id="CreditOpeninigID" name="Credit Openinig" processRef="CreditOpeningProcessID" />
   </bpmn:collaboration>
-  <bpmn:process id="CreditOpeningProcessID" name="DepositOpeningProcessName" processType="None" isClosed="false" isExecutable="true" camunda:historyTimeToLive="180">
+  <bpmn:process id="CreditOpeningProcessID" name="CreditOpeningProcessName" processType="None" isClosed="false" isExecutable="true" camunda:historyTimeToLive="180">
     <bpmn:laneSet id="LaneSet_02jquac">
       <bpmn:lane id="Lane_146t8ya" name="Client">
         <bpmn:flowNodeRef>EventStartID</bpmn:flowNodeRef>
