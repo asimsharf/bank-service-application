@@ -55,7 +55,11 @@
     <bpmn:scriptTask id="ActivityDepositOpeningProcessID" name="Deposit opening process" scriptFormat="JavaScript">
       <bpmn:incoming>Flow_0rynrue</bpmn:incoming>
       <bpmn:outgoing>Flow_1w0uvvs</bpmn:outgoing>
-      <bpmn:script>print('The deposit opening process has finished')</bpmn:script>
+      <bpmn:script>print('The deposit opening process has finished')
+
+var depositName = execution.getVariable('depositName');
+
+print("The choosed Depost name: " + depositName);</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:serviceTask id="ActivityProvidePassportID" name="Provide Passport" camunda:asyncBefore="true" camunda:delegateExpression="${passportProvidingDelegate}">
       <bpmn:incoming>Flow_03j70x6</bpmn:incoming>
@@ -77,12 +81,12 @@
         <dc:Bounds x="160" y="36" width="2050" height="804" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_146t8ya_di" bpmnElement="Lane_146t8ya" isHorizontal="true">
-        <dc:Bounds x="190" y="36" width="2020" height="402" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_0h09gyx_di" bpmnElement="BankWorkerID" isHorizontal="true">
         <dc:Bounds x="190" y="438" width="2020" height="402" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_146t8ya_di" bpmnElement="Lane_146t8ya" isHorizontal="true">
+        <dc:Bounds x="190" y="36" width="2020" height="402" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape-Event_1puwqxs" bpmnElement="EventStartID">
@@ -114,10 +118,6 @@
       <bpmndi:BPMNShape id="Event_1gk4zje_di" bpmnElement="Event_1gk4zje">
         <dc:Bounds x="2072" y="112" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Association_1s3ru9h_di" bpmnElement="Association_1s3ru9h">
-        <di:waypoint x="520" y="226" />
-        <di:waypoint x="342" y="140" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Event_052tndp_di" bpmnElement="ErrorPassportShouldBePresentHandleID" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
         <dc:Bounds x="602" y="192" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -152,13 +152,9 @@
         <di:waypoint x="1250" y="240" />
         <di:waypoint x="1560" y="240" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_1p3mkhy_di" bpmnElement="Association_1p3mkhy">
-        <di:waypoint x="1060" y="639" />
-        <di:waypoint x="1280" y="636" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_0qroavg_di" bpmnElement="Association_0qroavg">
-        <di:waypoint x="1150" y="240" />
-        <di:waypoint x="1029" y="240" />
+      <bpmndi:BPMNEdge id="Association_1s3ru9h_di" bpmnElement="Association_1s3ru9h">
+        <di:waypoint x="520" y="226" />
+        <di:waypoint x="342" y="140" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="TextAnnotation_1bramke_di" bpmnElement="TextAnnotation_1bramke">
         <dc:Bounds x="240" y="100" width="250" height="40" />
@@ -172,6 +168,14 @@
         <dc:Bounds x="840" y="225" width="189.49010327022378" height="41.30808950086059" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_1p3mkhy_di" bpmnElement="Association_1p3mkhy">
+        <di:waypoint x="1060" y="639" />
+        <di:waypoint x="1280" y="636" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0qroavg_di" bpmnElement="Association_0qroavg">
+        <di:waypoint x="1150" y="240" />
+        <di:waypoint x="1029" y="240" />
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

@@ -1,4 +1,4 @@
-2025-07-07 22:03:18.655671+03:00 jdbc[3]: exception
+2025-07-07 23:39:06.575204+03:00 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "ACT_RU_METER_LOG" not found (this database is empty); SQL statement:
 insert into ACT_RU_METER_LOG (ID_, NAME_, REPORTER_, VALUE_, TIMESTAMP_, MILLISECONDS_)
     values (

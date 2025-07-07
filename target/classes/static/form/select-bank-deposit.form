@@ -1,0 +1,58 @@
+{
+  "components": [
+    {
+      "type": "table",
+      "layout": {
+        "row": "Row_0jutx1j",
+        "columns": null
+      },
+      "label": "Deposits",
+      "rowCount": 10,
+      "columns": [
+        {
+          "label": "Name",
+          "key": "name"
+        },
+        {
+          "label": "Minimal Sum",
+          "key": "minimalSum"
+        },
+        {
+          "label": "Percentage",
+          "key": "percentage"
+        },
+        {
+          "label": "Term In Month",
+          "key": "termInMonth"
+        },
+        {
+          "label": "Currency",
+          "key": "currency"
+        }
+      ],
+      "id": "Field_1nf1mbj",
+      "dataSource": "=bankDeposits"
+    },
+    {
+      "label": "Deposit name",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_05rrkcs",
+        "columns": null
+      },
+      "id": "Field_12gjvvu",
+      "key": "depositName",
+      "description": "Enter deposit name which you prefer, in case you not please leave it empty",
+      "defaultValue": "Early-Spring"
+    }
+  ],
+  "type": "default",
+  "id": "Form_0xpndq6",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.36.1"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.23.0",
+  "schemaVersion": 18
+}

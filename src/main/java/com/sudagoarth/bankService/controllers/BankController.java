@@ -34,7 +34,7 @@ public class BankController {
                 .createProcessInstanceByKey(MAIN_DEPOSIT_CREDIT_PROCESS_ID)
                 .businessKey(businessKey)
 //                .setVariables(prepareVariables(asim))
-                .setVariables(prepareVariables(esam))
+                .setVariables(prepareVariables(asim))
                 .executeWithVariablesInReturn();
         return ResponseEntity.ok(String.format("Bank process with business key %s has been started successfully", businessKey));
     }
