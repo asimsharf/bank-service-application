@@ -31,7 +31,7 @@ public class BankController {
 
         ProcessEngines.getDefaultProcessEngine()
                 .getRuntimeService()
-                .createProcessInstanceByKey(MAIN_DEPOSIT_CREDIT_PROCESS)
+                .createProcessInstanceByKey(MAIN_DEPOSIT_CREDIT_PROCESS_ID)
                 .businessKey(businessKey)
 //                .setVariables(prepareVariables(asim))
                 .setVariables(prepareVariables(esam))

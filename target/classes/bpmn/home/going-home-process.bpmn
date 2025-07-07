@@ -4,7 +4,7 @@
     <bpmn:extensionElements />
     <bpmn:participant id="GoingHomeID" name="Going Home Process" processRef="GoingHomeProcessID" />
   </bpmn:collaboration>
-  <bpmn:process id="GoingHomeProcessID" name="GoingHomeProcessID" processType="None" isClosed="false" isExecutable="true" camunda:historyTimeToLive="180">
+  <bpmn:process id="GoingHomeProcessID" name="GoingHomeProcessName" processType="None" isClosed="false" isExecutable="true" camunda:historyTimeToLive="180">
     <bpmn:laneSet id="LaneSet_02jquac">
       <bpmn:lane id="Lane_146t8ya" name="Client">
         <bpmn:flowNodeRef>EventStartID</bpmn:flowNodeRef>

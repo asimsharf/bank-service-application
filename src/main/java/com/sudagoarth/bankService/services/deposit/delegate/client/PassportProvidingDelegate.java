@@ -23,7 +23,7 @@ public class PassportProvidingDelegate implements JavaDelegate {
 
         var client = (Client) delegateExecution.getVariable("client");
 
-        if (Objects.isNull(client)) {
+        if (Objects.isNull(client.getPassport())) {
             throw new BpmnError(SUDDEN_OPERATION_INTERRUPTION_ERROR, "The Passport should be present in the client object");
         }
 

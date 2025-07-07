@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.time.Month;
 
 public class Constants {
-    public static final String MAIN_DEPOSIT_CREDIT_PROCESS = "MainDepositCreditProcess";
+    public static final String MAIN_DEPOSIT_CREDIT_PROCESS_ID = "MainDepositCreditProcessID";
 
     public static final Wallet asimWallet = Wallet.builder()
             .moneyCount(BigDecimal.valueOf(100.20))
