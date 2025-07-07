@@ -29,7 +29,13 @@ public class BankController {
             return ResponseEntity.badRequest().body("Business key cannot be empty or null");
         }
 
-        ProcessEngines.getDefaultProcessEngine().getRuntimeService().createProcessInstanceByKey(MAIN_DEPOSIT_CREDIT_PROCESS).businessKey(businessKey).setVariables(prepareVariables(DZMITRIY)).executeWithVariablesInReturn();
+        ProcessEngines.getDefaultProcessEngine()
+                .getRuntimeService()
+                .createProcessInstanceByKey(MAIN_DEPOSIT_CREDIT_PROCESS)
+                .businessKey(businessKey)
+//                .setVariables(prepareVariables(asim))
+                .setVariables(prepareVariables(esam))
+                .executeWithVariablesInReturn();
         return ResponseEntity.ok(String.format("Bank process with business key %s has been started successfully", businessKey));
     }
 

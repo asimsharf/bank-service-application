@@ -1,12 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_12sof4y" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.36.1" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.7.0">
-  <bpmn:process id="CreditOpeningProcess" name="CreditOpeningProcess" isExecutable="true">
-    <bpmn:startEvent id="StartEvent_1" />
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:activiti="http://www.activiti.org/test" xmlns:tns="http://bpmn.io/schema/bpmn" xmlns:xsd="http://www.w3.org/2001/XMLSchema" id="Definitions_0fr9mxs" name="" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.36.1">
+  <bpmn:collaboration id="ClientID">
+    <bpmn:extensionElements />
+    <bpmn:participant id="CreditOpeninigID" name="Credit Openinig" processRef="CreditOpeningProcessID" />
+  </bpmn:collaboration>
+  <bpmn:process id="CreditOpeningProcessID" name="DepositOpeningProcessName" processType="None" isClosed="false" isExecutable="true" camunda:historyTimeToLive="180">
+    <bpmn:laneSet id="LaneSet_02jquac">
+      <bpmn:lane id="Lane_146t8ya" name="Client">
+        <bpmn:flowNodeRef>EventStartID</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EventEndID</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="BankWorkerID" name="Bank Worker" />
+    </bpmn:laneSet>
+    <bpmn:startEvent id="EventStartID" name="Credit Opening Process Start" />
+    <bpmn:endEvent id="EventEndID" name="Deposit Opening Process End" />
   </bpmn:process>
-  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="CreditOpeningProcess">
-      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
-        <dc:Bounds x="182" y="82" width="36" height="36" />
+  <bpmn:error id="Error_1ubtzh1" name="SUDDEN_OPERATION_INTERRUPTION_ERROR" errorCode="SUDDEN_OPERATION_INTERRUPTION_ERROR" camunda:errorMessage="" />
+  <bpmndi:BPMNDiagram id="Diagram-_1" name="New Diagram" documentation="background=#2B2D30;count=1;horizontalcount=1;orientation=0;width=842.4;height=1195.2;imageableWidth=832.4;imageableHeight=1185.2;imageableX=5.0;imageableY=5.0">
+    <bpmndi:BPMNPlane bpmnElement="ClientID">
+      <bpmndi:BPMNShape id="Participant_12eq6sm_di" bpmnElement="CreditOpeninigID" isHorizontal="true">
+        <dc:Bounds x="160" y="36" width="2050" height="804" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0h09gyx_di" bpmnElement="BankWorkerID" isHorizontal="true">
+        <dc:Bounds x="190" y="438" width="2020" height="402" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_146t8ya_di" bpmnElement="Lane_146t8ya" isHorizontal="true">
+        <dc:Bounds x="190" y="36" width="2020" height="402" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape-Event_1puwqxs" bpmnElement="EventStartID">
+        <dc:Bounds x="254" y="234" width="32" height="32" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="236" y="273" width="74" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape-Event_0frwe09" bpmnElement="EventEndID">
+        <dc:Bounds x="2074" y="224" width="32" height="32" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2052" y="263" width="82" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
