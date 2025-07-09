@@ -1,32 +1,38 @@
 spring:
   application:
     name: bank-service-application
+
   datasource:
-    url: jdbc:h2:file:./data/camunda-h2-database
+    url: jdbc:mysql://localhost:3306/camunda_wathiq
+    username: root
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 30000
+      connection-timeout: 30000
+      pool-name: HikariPool-Camunda
+
+  jpa:
+    hibernate:
+      ddl-auto: update
 
 camunda:
   bpm:
     admin-user:
       id: demo
       password: demo
-
-    database:
-      type: h2
-      schema-update: true
-
+    skip-isolation-level-check: true
     default-serialization-format: application/json
+    database:
+      type: mysql
+      schema-update: true
     generic-properties.properties:
       history-time-to-live: P1D
 
 logging:
   level:
     root: INFO
-    org.camunda.bpm.engine: INFO
-    org.camunda.bpm.engine.impl.persistence: WARN
-    org.camunda.bpm.engine.impl.interceptor: WARN
-    org.camunda.bpm.engine.rest: INFO
-    org.camunda.bpm.engine.rest.security: WARN
-    org.camunda.bpm.spring.boot: INFO
-#    org.camunda.bpm.engine.cmd: DEBUG   # Shows command stack activity
-#    org.camunda.bpm.engine.jobexecutor: DEBUG  # Shows async executor activity
-    com.sudagoarth: INFO  # Your application package
+    org.camunda.bpm: INFO
+    com.sudagoarth: DEBUG
