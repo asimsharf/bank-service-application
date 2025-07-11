@@ -13,9 +13,9 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @RequiredArgsConstructor
-@Component("clientParticularValidationDelegate")
+@Component("clientFullValidationDelegate")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class ClientParticularValidationDelegate implements JavaDelegate {
+public class ClientFullValidationDelegate implements JavaDelegate {
 
     @Autowired
     private ValidationService validationService;
@@ -23,16 +23,27 @@ public class ClientParticularValidationDelegate implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
-        log.info("ClientParticularValidationDelegate: Validating client particulars");
+        log.info("ClientFullValidationDelegate: Validating client particulars");
 
+        //1. Check if client wanted by police ?
+        //2. Is client in the bank blacklist ?
+        //3. Is client passport valid ?
         var client = (Client) delegateExecution.getVariable("client");
 
         var isCriminal = validationService.isClientWantedByPolice(client);
+        var isBlacklisted = validationService.isClientBlacklisted(client);
+        var isValidPassport = validationService.isValidPassport(client);
+
         delegateExecution.setVariable("isCriminal", isCriminal);
-        if (isCriminal) {
+        delegateExecution.setVariable("isBlacklisted", isBlacklisted);
+        delegateExecution.setVariable("isValidPassport", isValidPassport);
+
+        if (isCriminal || isBlacklisted || !isValidPassport) {
             delegateExecution.setVariable("isValidUser", false);
+            log.info("Client validation failed: isCriminal={}, isBlacklisted={}, isValidPassport={}", isCriminal, isBlacklisted, isValidPassport);
         } else {
             delegateExecution.setVariable("isValidUser", true);
+            log.info("Client validation passed: isCriminal={}, isBlacklisted={}, isValidPassport={}", isCriminal, isBlacklisted, isValidPassport);
         }
 
     }
