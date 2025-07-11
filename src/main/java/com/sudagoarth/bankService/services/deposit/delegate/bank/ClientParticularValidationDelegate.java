@@ -2,38 +2,32 @@ package com.sudagoarth.bankService.services.deposit.delegate.bank;
 
 import com.sudagoarth.bankService.models.Client;
 import com.sudagoarth.bankService.services.ValidationService;
+import com.sudagoarth.bankService.utils.AppLogger;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Slf4j
-@RequiredArgsConstructor
 @Component("clientParticularValidationDelegate")
+@RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ClientParticularValidationDelegate implements JavaDelegate {
 
-    @Autowired
-    private ValidationService validationService;
-
+    ValidationService validationService;
+    AppLogger logger;
 
     @Override
-    public void execute(DelegateExecution delegateExecution) throws Exception {
-        log.info("ClientParticularValidationDelegate: Validating client particulars");
+    public void execute(DelegateExecution execution) throws Exception {
+        logger.info(getClass(), "Starting client criminal check", execution.getVariables());
 
-        var client = (Client) delegateExecution.getVariable("client");
+        Client client = (Client) execution.getVariable("client");
+        boolean isCriminal = validationService.isClientWantedByPolice(client);
 
-        var isCriminal = validationService.isClientWantedByPolice(client);
-        delegateExecution.setVariable("isCriminal", isCriminal);
-        if (isCriminal) {
-            delegateExecution.setVariable("isValidUser", false);
-        } else {
-            delegateExecution.setVariable("isValidUser", true);
-        }
+        execution.setVariable("isCriminal", isCriminal);
+        execution.setVariable("isValidUser", !isCriminal);
 
+        logger.info(getClass(), "Client validation: isCriminal={}, isValidUser={}", isCriminal, !isCriminal);
     }
 }

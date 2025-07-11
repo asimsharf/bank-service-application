@@ -1,26 +1,35 @@
 package com.sudagoarth.bankService.services.way.delegate;
 
 import com.sudagoarth.bankService.models.Client;
+import com.sudagoarth.bankService.utils.AppLogger;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import lombok.AccessLevel;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
 @Component("taxiPaymentDelegate")
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class TaxiPaymentDelegate implements JavaDelegate {
-    private static final Logger logger = LoggerFactory.getLogger(TaxiPaymentDelegate.class);
+
+    AppLogger logger;
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
-        logger.info("The TaxiPaymentDelegate has executed ...");
+        logger.info(getClass(), "TaxiPaymentDelegate: Executing taxi payment...");
+
         var client = (Client) delegateExecution.getVariable("client");
-        var taxiCost = (String) delegateExecution.getVariable("taxiCost");
-        var moneyOnWallet = client.getWallet().getMoneyCount().subtract(new BigDecimal(taxiCost));
-        client.getWallet().setMoneyCount(moneyOnWallet);
+        var taxiCostStr = (String) delegateExecution.getVariable("taxiCost");
+        var taxiCost = new BigDecimal(taxiCostStr);
+
+        var newBalance = client.getWallet().getMoneyCount().subtract(taxiCost);
+        client.getWallet().setMoneyCount(newBalance);
         delegateExecution.setVariable("client", client);
-        logger.info("Client {} has paid for taxi ride. Remaining wallet balance: {}", client.getName(), moneyOnWallet);
+
+        logger.info(getClass(), "Client {} has paid {} for taxi. Remaining balance: {}", client.getName(), taxiCost, newBalance);
     }
 }

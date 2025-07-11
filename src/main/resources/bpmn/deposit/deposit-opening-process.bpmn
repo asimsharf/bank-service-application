@@ -146,10 +146,10 @@ print("The choosed Depost name: " + depositName);</bpmn:script>
     <bpmn:sequenceFlow id="Flow_1ankoe2" sourceRef="ActivityDepositProvidingID" targetRef="ActivityDepositChoosingID" />
     <bpmn:sequenceFlow id="Flow_01blp0b" sourceRef="ActivityDepositChoosingID" targetRef="GatewayIsDepositSelectedID" />
     <bpmn:sequenceFlow id="FlowNoDepositSelectedID" name="No" sourceRef="GatewayIsDepositSelectedID" targetRef="Event_0ysjeed">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!execution.hasVariable("depositName") || depositName != null || depositName != ""}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!execution.hasVariable("depositName") || depositName == null || depositName == ""}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="FlowYesDepositSelectedID" name="Yes" sourceRef="GatewayIsDepositSelectedID" targetRef="ActivityCheckNewClientExistingID">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${execution.hasVariable("depositName") &amp;&amp; depositName != null}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${execution.hasVariable("depositName") &amp;&amp; depositName != null &amp;&amp; depositName != ""}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_15doh6n" sourceRef="ActivityCheckNewClientExistingID" targetRef="GatewayIsExistingClientID" />
     <bpmn:sequenceFlow id="FlowNoExistingClientID" name="No" sourceRef="GatewayIsExistingClientID" targetRef="ActivityClientFullValidateID">
