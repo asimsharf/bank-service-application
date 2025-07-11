@@ -33,7 +33,7 @@
     <bpmn:association id="Association_1s3ru9h" associationDirection="None" sourceRef="ActivityProvidePassportID" targetRef="TextAnnotation_1bramke" />
     <bpmn:association id="Association_1p3mkhy" associationDirection="None" sourceRef="ActivityDepositProvidingID" targetRef="TextAnnotation_188hew3" />
     <bpmn:association id="Association_0q3zggr" associationDirection="None" sourceRef="ActivityCheckNewClientExistingID" targetRef="TextAnnotation_1xmcr15" />
-    <bpmn:association id="Association_0g9w0sd" associationDirection="None" sourceRef="ActivityPerformPaticularCustomerValidationID" targetRef="TextAnnotation_1ddquwc" />
+    <bpmn:association id="Association_0g9w0sd" associationDirection="None" sourceRef="ActivityParticularValidationID" targetRef="TextAnnotation_1ddquwc" />
     <bpmn:association id="Association_0or5a93" associationDirection="None" sourceRef="Event_0ysjeed" targetRef="TextAnnotation_0d5csol" />
     <bpmn:association id="Association_0qroavg" associationDirection="None" sourceRef="ActivityDepositChoosingID" targetRef="TextAnnotation_0he5mp3" />
     <bpmn:association id="Association_1ls40eu" associationDirection="None" sourceRef="ActivityClientFullValidateID" targetRef="TextAnnotation_0mwjyzd" />
@@ -46,7 +46,7 @@
         <bpmn:flowNodeRef>Gateway_0621k5q</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_14cjzph</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ActivityClientFullValidateID</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>ActivityPerformPaticularCustomerValidationID</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ActivityParticularValidationID</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_0hrish7</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ActivityDepositOpeningProcessID</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0nch4ye</bpmn:flowNodeRef>
@@ -103,11 +103,11 @@
       <bpmn:incoming>Flow_1amgl2p</bpmn:incoming>
       <bpmn:outgoing>Flow_0m382ev</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="ActivityClientFullValidateID" name="Perform full customer validation" camunda:delegateExpression="${clientClientFullValidationDelegate}">
+    <bpmn:serviceTask id="ActivityClientFullValidateID" name="Perform full customer validation" camunda:delegateExpression="${clientFullValidationDelegate}">
       <bpmn:incoming>Flow_13k8nas</bpmn:incoming>
       <bpmn:outgoing>Flow_1c5c785</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="ActivityPerformPaticularCustomerValidationID" name="Perform particular customer validation" camunda:delegateExpression="${clientPerformPaticularCustomerValidationDelegate}">
+    <bpmn:serviceTask id="ActivityParticularValidationID" name="Perform Particular customer validation" camunda:delegateExpression="${clientParticularValidationDelegate}">
       <bpmn:incoming>Flow_085hdpj</bpmn:incoming>
       <bpmn:outgoing>Flow_1amgl2p</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -159,11 +159,11 @@ print("The choosed Depost name: " + depositName);</bpmn:script>
     <bpmn:sequenceFlow id="Flow_13k8nas" name="No" sourceRef="Gateway_0621k5q" targetRef="ActivityClientFullValidateID">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${1!=1}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_085hdpj" name="Yes" sourceRef="Gateway_0621k5q" targetRef="ActivityPerformPaticularCustomerValidationID">
+    <bpmn:sequenceFlow id="Flow_085hdpj" name="Yes" sourceRef="Gateway_0621k5q" targetRef="ActivityParticularValidationID">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${1==1}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1c5c785" sourceRef="ActivityClientFullValidateID" targetRef="Gateway_14cjzph" />
-    <bpmn:sequenceFlow id="Flow_1amgl2p" sourceRef="ActivityPerformPaticularCustomerValidationID" targetRef="Gateway_14cjzph" />
+    <bpmn:sequenceFlow id="Flow_1amgl2p" sourceRef="ActivityParticularValidationID" targetRef="Gateway_14cjzph" />
     <bpmn:sequenceFlow id="Flow_0m382ev" sourceRef="Gateway_14cjzph" targetRef="Gateway_0hrish7" />
     <bpmn:sequenceFlow id="Flow_0pmvlt1" sourceRef="Gateway_0hrish7" targetRef="ActivityDepositOpeningProcessID">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${1==1}</bpmn:conditionExpression>
@@ -233,7 +233,7 @@ print("The choosed Depost name: " + depositName);</bpmn:script>
         <dc:Bounds x="1680" y="720" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_16du4tr_di" bpmnElement="ActivityPerformPaticularCustomerValidationID" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+      <bpmndi:BPMNShape id="Activity_16du4tr_di" bpmnElement="ActivityParticularValidationID" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
         <dc:Bounds x="1680" y="960" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>

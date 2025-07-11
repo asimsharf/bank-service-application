@@ -2,7 +2,8 @@ package com.sudagoarth.bankService.services;
 
 import com.sudagoarth.bankService.models.Client;
 import lombok.extern.slf4j.Slf4j;
-import org.jvnet.hk2.annotations.Service;
+import org.springframework.stereotype.Service;
+
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -15,22 +16,14 @@ public class ValidationServiceImpl implements ValidationService {
     @Override
     public boolean isClientWantedByPolice(Client client) {
 
-        policeWantedClients.stream()
-                .filter(policeClient -> policeClient.getPassport().getIdenticalNumber().equals(client.getPassport().getIdenticalNumber()))
-                .findFirst()
-                .ifPresent(policeClient -> log.info("Client with passport {} is wanted by police", client.getPassport().getIdenticalNumber()));
-        return policeWantedClients.stream()
-                .anyMatch(policeClient -> policeClient.getPassport().getIdenticalNumber().equals(client.getPassport().getIdenticalNumber()));
+        policeWantedClients.stream().filter(policeClient -> policeClient.getPassport().getIdenticalNumber().equals(client.getPassport().getIdenticalNumber())).findFirst().ifPresent(policeClient -> log.info("Client with passport {} is wanted by police", client.getPassport().getIdenticalNumber()));
+        return policeWantedClients.stream().anyMatch(policeClient -> policeClient.getPassport().getIdenticalNumber().equals(client.getPassport().getIdenticalNumber()));
     }
 
     @Override
     public boolean isClientBlacklisted(Client client) {
-        blacklistedClients.stream()
-                .filter(blacklistedClient -> blacklistedClient.getPassport().getIdenticalNumber().equals(client.getPassport().getIdenticalNumber()))
-                .findFirst()
-                .ifPresent(blacklistedClient -> log.info("Client with passport {} is blacklisted", client.getPassport().getIdenticalNumber()));
-        return blacklistedClients.stream()
-                .anyMatch(blacklistedClient -> blacklistedClient.getPassport().getIdenticalNumber().equals(client.getPassport().getIdenticalNumber()));
+        blacklistedClients.stream().filter(blacklistedClient -> blacklistedClient.getPassport().getIdenticalNumber().equals(client.getPassport().getIdenticalNumber())).findFirst().ifPresent(blacklistedClient -> log.info("Client with passport {} is blacklisted", client.getPassport().getIdenticalNumber()));
+        return blacklistedClients.stream().anyMatch(blacklistedClient -> blacklistedClient.getPassport().getIdenticalNumber().equals(client.getPassport().getIdenticalNumber()));
     }
 
     @Override

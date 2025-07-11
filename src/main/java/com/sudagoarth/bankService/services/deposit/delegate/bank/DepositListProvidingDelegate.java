@@ -18,9 +18,6 @@ public class DepositListProvidingDelegate implements JavaDelegate {
         logger.info("DepositListProvidingDelegate: Executing deposit list providing process");
 
         // TODO: obtain the list of bankDeposits from DB
-
-
-
         delegateExecution.setVariable("bankDeposits", bankDeposits);
 
     }
