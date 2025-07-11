@@ -93,7 +93,7 @@
     <bpmn:endEvent id="Event_0ysjeed">
       <bpmn:incoming>FlowNoDepositSelectedID</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:exclusiveGateway id="GatewayIsExistingClientID" name="Is it existing client ?" default="FlowNoExistingClientID">
+    <bpmn:exclusiveGateway id="GatewayIsExistingClientID" name="Is it existing client ?">
       <bpmn:incoming>Flow_15doh6n</bpmn:incoming>
       <bpmn:outgoing>FlowNoExistingClientID</bpmn:outgoing>
       <bpmn:outgoing>FlowYesExistingClientID</bpmn:outgoing>
@@ -146,15 +146,17 @@ print("The choosed Depost name: " + depositName);</bpmn:script>
     <bpmn:sequenceFlow id="Flow_1ankoe2" sourceRef="ActivityDepositProvidingID" targetRef="ActivityDepositChoosingID" />
     <bpmn:sequenceFlow id="Flow_01blp0b" sourceRef="ActivityDepositChoosingID" targetRef="GatewayIsDepositSelectedID" />
     <bpmn:sequenceFlow id="FlowNoDepositSelectedID" name="No" sourceRef="GatewayIsDepositSelectedID" targetRef="Event_0ysjeed">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!execution.hasVariable("depositName") || depositName != null}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!execution.hasVariable("depositName") || depositName != null || depositName != ""}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="FlowYesDepositSelectedID" name="Yes" sourceRef="GatewayIsDepositSelectedID" targetRef="ActivityCheckNewClientExistingID">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${execution.hasVariable("depositName") &amp;&amp; depositName != null}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_15doh6n" sourceRef="ActivityCheckNewClientExistingID" targetRef="GatewayIsExistingClientID" />
-    <bpmn:sequenceFlow id="FlowNoExistingClientID" name="No" sourceRef="GatewayIsExistingClientID" targetRef="ActivityClientFullValidateID" />
+    <bpmn:sequenceFlow id="FlowNoExistingClientID" name="No" sourceRef="GatewayIsExistingClientID" targetRef="ActivityClientFullValidateID">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isExistingUser}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="FlowYesExistingClientID" name="Yes" sourceRef="GatewayIsExistingClientID" targetRef="ActivityParticularValidationID">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${1==1}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isExistingUser}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1c5c785" sourceRef="ActivityClientFullValidateID" targetRef="Gateway_14cjzph" />
     <bpmn:sequenceFlow id="Flow_1amgl2p" sourceRef="ActivityParticularValidationID" targetRef="Gateway_14cjzph" />
