@@ -1,11 +1,16 @@
 package com.sudagoarth.bankService.controllers;
 
+import com.sudagoarth.bankService.dtos.ClientDTO;
+import com.sudagoarth.bankService.dtos.PassportDTO;
+import com.sudagoarth.bankService.dtos.WalletDTO;
 import com.sudagoarth.bankService.models.Client;
 import com.sudagoarth.bankService.utils.AppLogger;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.apache.commons.lang3.StringUtils;
 import org.camunda.bpm.engine.ProcessEngines;
+import org.camunda.bpm.engine.variable.Variables;
+import org.camunda.bpm.engine.variable.value.ObjectValue;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,10 +47,38 @@ public class BankController {
         return ResponseEntity.ok("Bank process with business key " + businessKey + " has been started successfully");
     }
 
+    private ClientDTO toDTO(Client client) {
+        return new ClientDTO(
+                client.getId(),
+                client.getName(),
+                client.getSurname(),
+                client.getAddress(),
+                client.getPhone(),
+                client.getBirthday(),
+                new WalletDTO(client.getWallet().getMoneyCount()),
+                client.getPassport() != null ? new PassportDTO(
+                        client.getPassport().getSeries(),
+                        client.getPassport().getIdenticalNumber(),
+                        client.getPassport().getName(),
+                        client.getPassport().getSurname(),
+                        client.getPassport().getAddress(),
+                        client.getPassport().getBirthDate(),
+                        client.getPassport().getValidFrom(),
+                        client.getPassport().getValidTo()
+                ) : null
+        );
+    }
+
     private Map<String, Object> prepareVariables(Client client) {
         Map<String, Object> variables = new HashMap<>();
-        variables.put("client", client);
+        ClientDTO clientDTO = toDTO(client);
+        ObjectValue typedClient = Variables.objectValue(clientDTO)
+                .serializationDataFormat(Variables.SerializationDataFormats.JAVA)
+                .create();
+
+        variables.put("client", typedClient);
         return variables;
     }
+
 
 }

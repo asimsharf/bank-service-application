@@ -149,7 +149,7 @@ print("The choosed Depost name: " + depositName);</bpmn:script>
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!execution.hasVariable("depositName") || depositName == null || depositName == ""}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="FlowYesDepositSelectedID" name="Yes" sourceRef="GatewayIsDepositSelectedID" targetRef="ActivityCheckNewClientExistingID">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${execution.hasVariable("depositName") &amp;&amp; depositName != null &amp;&amp; depositName != ""}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${not empty depositName}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_15doh6n" sourceRef="ActivityCheckNewClientExistingID" targetRef="GatewayIsExistingClientID" />
     <bpmn:sequenceFlow id="FlowNoExistingClientID" name="No" sourceRef="GatewayIsExistingClientID" targetRef="ActivityClientFullValidateID">

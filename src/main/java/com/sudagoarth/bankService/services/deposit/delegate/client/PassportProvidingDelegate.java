@@ -1,5 +1,6 @@
 package com.sudagoarth.bankService.services.deposit.delegate.client;
 
+import com.sudagoarth.bankService.dtos.ClientDTO;
 import com.sudagoarth.bankService.models.Client;
 import com.sudagoarth.bankService.utils.AppLogger;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class PassportProvidingDelegate implements JavaDelegate {
     public void execute(DelegateExecution delegateExecution) throws Exception {
         logger.info(getClass(), "PassportProvidingDelegate: Executing passport providing process");
 
-        Client client = (Client) delegateExecution.getVariable("client");
+        ClientDTO client = (ClientDTO) delegateExecution.getVariable("client");
 
         if (Objects.isNull(client.getPassport())) {
             throw new BpmnError(SUDDEN_OPERATION_INTERRUPTION_ERROR, "The Passport should be present in the client object");
