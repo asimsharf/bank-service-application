@@ -1,5 +1,6 @@
 package com.sudagoarth.bankService.services.way.delegate;
 
+import com.sudagoarth.bankService.dtos.ClientDTO;
 import com.sudagoarth.bankService.models.Client;
 import com.sudagoarth.bankService.utils.AppLogger;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ public class TaxiPaymentDelegate implements JavaDelegate {
     public void execute(DelegateExecution delegateExecution) throws Exception {
         logger.info(getClass(), "TaxiPaymentDelegate: Executing taxi payment...");
 
-        var client = (Client) delegateExecution.getVariable("client");
+        ClientDTO client = (ClientDTO) delegateExecution.getVariable("client");
         var taxiCostStr = (String) delegateExecution.getVariable("taxiCost");
         var taxiCost = new BigDecimal(taxiCostStr);
 
