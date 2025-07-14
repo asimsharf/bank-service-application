@@ -7,7 +7,6 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 import static com.sudagoarth.bankService.utils.Constants.*;
 
@@ -45,12 +44,10 @@ public class ValidationServiceImpl implements ValidationService {
             return false;
         }
 
-        if (client.getPassport().getValidTo().isBefore(LocalDate.now())) {
-            logger.info(getClass(), "Client with passport {} has an expired passport", client.getPassport().getIdenticalNumber());
-            return false;
-        }
+        boolean isValid = !client.getPassport().getValidTo().isBefore(LocalDate.now());
 
-        logger.info(getClass(), "Client with passport {} has a valid passport", client.getPassport().getIdenticalNumber());
-        return true;
+        logger.info(getClass(), "Client with passport {} has {} passport", client.getPassport().getIdenticalNumber(), isValid ? "a valid" : "an expired");
+
+        return isValid;
     }
 }

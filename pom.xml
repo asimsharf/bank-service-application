@@ -15,10 +15,11 @@
         <camunda-bom.version>7.23.0</camunda-bom.version>
         <spring-boot-dependencies.version>3.4.4</spring-boot-dependencies.version>
         <camunda-spin-core.version>7.23.0</camunda-spin-core.version>
-        <camunda-spin-dataformat-json-jackson.version>7.22.0</camunda-spin-dataformat-json-jackson.version>
+        <camunda-spin-dataformat-json-jackson.version>7.23.0</camunda-spin-dataformat-json-jackson.version>
         <nashorn-core.version>15.4</nashorn-core.version>
         <camunda-bpm-junit5.version>1.1.0</camunda-bpm-junit5.version>
         <mysql-connector-java.version>8.0.33</mysql-connector-java.version>
+        <logstash-logback-encoder.version>7.4</logstash-logback-encoder.version>
     </properties>
 
     <dependencyManagement>
@@ -150,7 +151,12 @@
         <dependency>
             <groupId>net.logstash.logback</groupId>
             <artifactId>logstash-logback-encoder</artifactId>
-            <version>7.4</version>
+            <version>${logstash-logback-encoder.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>
 
     </dependencies>

@@ -13,14 +13,13 @@ import java.time.LocalDate;
 @Builder
 @Accessors(chain = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Setter
-@Getter
 @Entity
 public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long clientId;
+
     String id;
     String name;
     String surname;

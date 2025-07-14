@@ -1,19 +1,21 @@
 package com.sudagoarth.bankService.services.deposit.delegate.client;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.sudagoarth.bankService.dtos.ClientDTO;
-import com.sudagoarth.bankService.models.Client;
 import com.sudagoarth.bankService.utils.AppLogger;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.AccessLevel;
 import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
 import java.util.Objects;
 
-import static com.sudagoarth.bankService.utils.Constants.*;
+import static com.sudagoarth.bankService.utils.Constants.SUDDEN_OPERATION_INTERRUPTION_ERROR;
 
 @Component("passportProvidingDelegate")
 @RequiredArgsConstructor
@@ -26,8 +28,16 @@ public class PassportProvidingDelegate implements JavaDelegate {
     public void execute(DelegateExecution delegateExecution) throws Exception {
         logger.info(getClass(), "PassportProvidingDelegate: Executing passport providing process");
 
-        ClientDTO client = (ClientDTO) delegateExecution.getVariable("client");
+        // Get the variable as a Map (because it was stored that way)
+        Map<String, Object> clientMap = (Map<String, Object>) delegateExecution.getVariable("client");
 
+        // Convert map back to ClientDTO using Jackson
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+
+        ClientDTO client = mapper.convertValue(clientMap, ClientDTO.class);
+
+        // Business logic
         if (Objects.isNull(client.getPassport())) {
             throw new BpmnError(SUDDEN_OPERATION_INTERRUPTION_ERROR, "The Passport should be present in the client object");
         }

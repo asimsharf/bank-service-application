@@ -1,6 +1,7 @@
 package com.sudagoarth.bankService.services.deposit.delegate.bank;
 
-import com.sudagoarth.bankService.models.Client;
+import com.sudagoarth.bankService.dtos.ClientDTO;
+import com.sudagoarth.bankService.dtos.PassportDTO;
 import com.sudagoarth.bankService.models.Passport;
 import com.sudagoarth.bankService.utils.AppLogger;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
@@ -20,8 +21,8 @@ public class ClientExistingCheckingDelegate implements JavaDelegate {
     public void execute(DelegateExecution delegateExecution) throws Exception {
         logger.info(getClass(), "Executing client existence check delegate", delegateExecution.getVariables());
 
-        Client client = (Client) delegateExecution.getVariable("client");
-        Passport passport = client.getPassport();
+        ClientDTO client = (ClientDTO) delegateExecution.getVariable("client");
+        PassportDTO passport = client.getPassport();
 
         boolean isExistingUser = bankAlreadyClientsInfo.stream().anyMatch(info -> matchClientInfo(info, passport));
 
@@ -32,7 +33,7 @@ public class ClientExistingCheckingDelegate implements JavaDelegate {
         delegateExecution.setVariable("isExistingUser", isExistingUser);
     }
 
-    private boolean matchClientInfo(Passport info, Passport passport) {
+    private boolean matchClientInfo(Passport info, PassportDTO passport) {
         return info.getIdenticalNumber().equals(passport.getIdenticalNumber()) && info.getName().equals(passport.getName()) && info.getSurname().equals(passport.getSurname());
     }
 }

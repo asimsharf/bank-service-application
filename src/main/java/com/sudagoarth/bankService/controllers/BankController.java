@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.sudagoarth.bankService.utils.Constants.MAIN_DEPOSIT_CREDIT_PROCESS_ID;
-import static com.sudagoarth.bankService.utils.Constants.*;
+import static com.sudagoarth.bankService.utils.Constants.asim;
 
 @RestController
 @RequestMapping("/api/bank")
@@ -47,32 +47,12 @@ public class BankController {
         return ResponseEntity.ok("Bank process with business key " + businessKey + " has been started successfully");
     }
 
-    private ClientDTO toDTO(Client client) {
-        return new ClientDTO(
-                client.getId(),
-                client.getName(),
-                client.getSurname(),
-                client.getAddress(),
-                client.getPhone(),
-                client.getBirthday(),
-                new WalletDTO(client.getWallet().getMoneyCount()),
-                client.getPassport() != null ? new PassportDTO(
-                        client.getPassport().getSeries(),
-                        client.getPassport().getIdenticalNumber(),
-                        client.getPassport().getName(),
-                        client.getPassport().getSurname(),
-                        client.getPassport().getAddress(),
-                        client.getPassport().getBirthDate(),
-                        client.getPassport().getValidFrom(),
-                        client.getPassport().getValidTo()
-                ) : null
-        );
-    }
-
     private Map<String, Object> prepareVariables(Client client) {
         Map<String, Object> variables = new HashMap<>();
         ClientDTO clientDTO = toDTO(client);
-        ObjectValue typedClient = Variables.objectValue(clientDTO)
+
+        ObjectValue typedClient = Variables
+                .objectValue(clientDTO)
                 .serializationDataFormat(Variables.SerializationDataFormats.JAVA)
                 .create();
 
@@ -80,5 +60,26 @@ public class BankController {
         return variables;
     }
 
+    private ClientDTO toDTO(Client client) {
+        return ClientDTO.builder()
+                .id(client.getId())
+                .name(client.getName())
+                .surname(client.getSurname())
+                .address(client.getAddress())
+                .phone(client.getPhone())
+                .birthday(client.getBirthday())
+                .wallet(WalletDTO.builder().moneyCount(client.getWallet().getMoneyCount()).build())
+                .passport(client.getPassport() != null ? PassportDTO.builder()
+                        .series(client.getPassport().getSeries())
+                        .identicalNumber(client.getPassport().getIdenticalNumber())
+                        .name(client.getPassport().getName())
+                        .surname(client.getPassport().getSurname())
+                        .address(client.getPassport().getAddress())
+                        .birthDate(client.getPassport().getBirthDate())
+                        .validFrom(client.getPassport().getValidFrom())
+                        .validTo(client.getPassport().getValidTo())
+                        .build() : null)
+                .build();
+    }
 
 }
