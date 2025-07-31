@@ -3,10 +3,10 @@ spring:
     name: bank-service-application
 
   datasource:
-    url: jdbc:mysql://localhost:3306/camunda_wathiq
-    username: root
+    url: jdbc:h2:~/camunda_wathiq;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
     password:
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: org.h2.Driver
     hikari:
       maximum-pool-size: 10
       minimum-idle: 5
@@ -29,7 +29,7 @@ camunda:
     skip-isolation-level-check: true
     default-serialization-format: application/json
     database:
-      type: mysql
+      type: h2
       schema-update: true
     generic-properties.properties:
       history-time-to-live: P1D

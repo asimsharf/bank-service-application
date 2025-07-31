@@ -1,9 +1,8 @@
 package com.sudagoarth.bankService.services.deposit.delegate.client;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.sudagoarth.bankService.dtos.ClientDTO;
+import com.sudagoarth.bankService.models.Client;
 import com.sudagoarth.bankService.utils.AppLogger;
+import com.sudagoarth.bankService.utils.EntityToMapConverter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -25,23 +24,21 @@ public class PassportProvidingDelegate implements JavaDelegate {
     AppLogger logger;
 
     @Override
-    public void execute(DelegateExecution delegateExecution) throws Exception {
-        logger.info(getClass(), "PassportProvidingDelegate: Executing passport providing process");
+    public void execute(DelegateExecution execution) throws Exception {
+        logger.info(getClass(), "Executing passport providing process");
 
-        // Get the variable as a Map (because it was stored that way)
-        Map<String, Object> clientMap = (Map<String, Object>) delegateExecution.getVariable("client");
+        @SuppressWarnings("unchecked") Map<String, Object> clientMap = (Map<String, Object>) execution.getVariable("client");
 
-        // Convert map back to ClientDTO using Jackson
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-
-        ClientDTO client = mapper.convertValue(clientMap, ClientDTO.class);
-
-        // Business logic
-        if (Objects.isNull(client.getPassport())) {
-            throw new BpmnError(SUDDEN_OPERATION_INTERRUPTION_ERROR, "The Passport should be present in the client object");
+        if (clientMap == null) {
+            throw new BpmnError(SUDDEN_OPERATION_INTERRUPTION_ERROR, "Client variable is missing from process context");
         }
 
-        logger.info(getClass(), "Client {} has provided the passport", client.getName());
+        Client client = EntityToMapConverter.mapToClient(clientMap);
+
+        if (Objects.isNull(client.getPassport())) {
+            throw new BpmnError(SUDDEN_OPERATION_INTERRUPTION_ERROR, "Passport must be provided for client verification");
+        }
+
+        logger.info(getClass(), "Client {} has provided a valid passport", client.getName());
     }
 }

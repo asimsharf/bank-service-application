@@ -1,5 +1,6 @@
 package com.sudagoarth.bankService.services.deposit.delegate.bank;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sudagoarth.bankService.models.Client;
 import com.sudagoarth.bankService.services.ValidationService;
 import com.sudagoarth.bankService.utils.AppLogger;
@@ -17,17 +18,23 @@ public class ClientParticularValidationDelegate implements JavaDelegate {
 
     ValidationService validationService;
     AppLogger logger;
+    ObjectMapper objectMapper;
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
         logger.info(getClass(), "Starting client criminal check", execution.getVariables());
 
-        Client client = (Client) execution.getVariable("client");
+        Object rawClient = execution.getVariable("client");
+        if (rawClient == null) {
+            throw new IllegalStateException("Client variable is missing");
+        }
+
+        Client client = objectMapper.convertValue(rawClient, Client.class);
         boolean isCriminal = validationService.isClientWantedByPolice(client);
 
         execution.setVariable("isCriminal", isCriminal);
         execution.setVariable("isValidUser", !isCriminal);
 
-        logger.info(getClass(), "Client validation: isCriminal={}, isValidUser={}", isCriminal, !isCriminal);
+        logger.info(getClass(), "Client validation result: isCriminal={}, isValidUser={}", isCriminal, !isCriminal);
     }
 }
