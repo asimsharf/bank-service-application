@@ -24,7 +24,7 @@ public class ClientExistingCheckingDelegate implements JavaDelegate {
     final AppLogger logger;
 
     @Override
-    public void execute(DelegateExecution execution) throws Exception {
+    public void execute(DelegateExecution execution) {
         logger.info(getClass(), "Executing client existence check delegate", execution.getVariables());
 
         Object rawClient = execution.getVariable("client");

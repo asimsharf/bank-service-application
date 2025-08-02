@@ -21,7 +21,7 @@ public class ClientParticularValidationDelegate implements JavaDelegate {
     ObjectMapper objectMapper;
 
     @Override
-    public void execute(DelegateExecution execution) throws Exception {
+    public void execute(DelegateExecution execution) {
         logger.info(getClass(), "Starting client criminal check", execution.getVariables());
 
         Object rawClient = execution.getVariable("client");

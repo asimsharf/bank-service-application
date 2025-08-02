@@ -22,7 +22,7 @@ public class ClientFullValidationDelegate implements JavaDelegate {
     final AppLogger logger;
 
     @Override
-    public void execute(DelegateExecution execution) throws Exception {
+    public void execute(DelegateExecution execution) {
         logger.info(getClass(), "Executing full client validation process", execution.getVariables());
 
         Object rawClient = execution.getVariable("client");

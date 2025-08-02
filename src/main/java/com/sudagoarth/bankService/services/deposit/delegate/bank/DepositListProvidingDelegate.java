@@ -24,7 +24,7 @@ public class DepositListProvidingDelegate implements JavaDelegate {
     AppLogger logger;
 
     @Override
-    public void execute(DelegateExecution execution) throws Exception {
+    public void execute(DelegateExecution execution) {
         logger.info(getClass(), "Executing deposit list provider delegate");
 
         List<Map<String, Object>> depositList = bankDeposits.stream().map(EntityToMapConverter::convertDepositToMap).collect(Collectors.toList());

@@ -21,7 +21,7 @@ public class TaxiPaymentDelegate implements JavaDelegate {
     AppLogger logger;
 
     @Override
-    public void execute(DelegateExecution delegateExecution) throws Exception {
+    public void execute(DelegateExecution delegateExecution) {
         logger.info(getClass(), "TaxiPaymentDelegate: Executing taxi payment...");
 
         // ✅ Convert Map → Client

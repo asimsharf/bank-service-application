@@ -24,7 +24,7 @@ public class PassportProvidingDelegate implements JavaDelegate {
     AppLogger logger;
 
     @Override
-    public void execute(DelegateExecution execution) throws Exception {
+    public void execute(DelegateExecution execution) {
         logger.info(getClass(), "Executing passport providing process");
 
         @SuppressWarnings("unchecked") Map<String, Object> clientMap = (Map<String, Object>) execution.getVariable("client");
